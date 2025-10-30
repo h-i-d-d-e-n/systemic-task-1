@@ -8,9 +8,55 @@ class Person { // Person class definition
   int examResults;
   double finalGrade;
 
-  void gradeAverage() {
-        finalGrade = accumulate(homework.begin(), homework.end(), 0.0) / static_cast<double>(homework.size()) * 0.4 + examResults * 0.6;
-    };
+  string methodOfCalculation;
+
+
+  double gradeAverage () { // changed to double so functions would work and plus its more accurate
+    return accumulate(homework.begin(), homework.end(), 0.0) / static_cast<double>(homework.size());
+  };
+
+  double averagePath () {
+    double fullAverageGrade;
+    fullAverageGrade = gradeAverage() * 0.4 + examResults * 0.6;
+    return fullAverageGrade;
+  };
+
+  double medianPath () {
+    double fullMedianGrade;
+    fullMedianGrade = gradeMedian() * 0.4 + examResults * 0.6;
+    return fullMedianGrade;
+  };
+
+
+  double gradeMedian() { // changed to double so functions would work and plus its more accurate
+    if (homework.size() % 2 == 0) {
+
+      size_t size;
+      size_t middlePoint_A;
+      size_t middlePoint_B;
+      double median;
+
+      size = homework.size();
+      middlePoint_A = size/2 ;
+      middlePoint_B = (size/2) + 1;
+      median = (homework.at(middlePoint_A) + homework.at(middlePoint_B)) / 2;
+      return median;
+    }
+    else
+    {
+    if (homework.size() % 2 != 0) {
+
+      size_t size;
+      size_t middlePoint;
+      double median;
+
+      size = homework.size();
+      middlePoint = size / 2;
+      median = homework.at(middlePoint);
+      return median;
+    }
+   } // placeholder return to avoid compiler error
+  };
 
   Person() { // Constructor
 
@@ -20,7 +66,7 @@ class Person { // Person class definition
     finalGrade = 0.0;
     // im not doing homework cause its already empty by default
 
-  };
+  }
 
   Person(const Person& other) { // Copy constructor
 
@@ -30,9 +76,11 @@ class Person { // Person class definition
     examResults = other.examResults;
     finalGrade = other.finalGrade;
 
+    methodOfCalculation = other.methodOfCalculation;
+
   }
 
-  Person& operator=(const Person& other) { // Copy assignment operator 
+  Person& operator=(const Person& other) { // Copy assignment operator
 
     if (this != &other) {  // it prevents potential storage reuse
 
@@ -42,14 +90,16 @@ class Person { // Person class definition
       examResults = other.examResults;
       finalGrade = other.finalGrade;
 
-    }
+      methodOfCalculation = other.methodOfCalculation;
+
+    };
 
     return *this;
   }
-  
+
   ~Person() { // Deconstructor
     // from what i can tell its not required to add anything inside as it all does it itself as a deconstructor
-  }; 
+  }
 
 
   friend std::istream& operator>>(std::istream& inp, Person& student) {
@@ -67,11 +117,25 @@ class Person { // Person class definition
         inp >> student.homework[i];
     cout << "Enter exam grade: ";
     inp >> student.examResults;
-    student.gradeAverage();  // recalculate final grade
-    return inp;
-};
 
-  
+    cout << "Choose method of final grade calculation: ";
+    inp >> student.methodOfCalculation;
+    if (student.methodOfCalculation == "average" || student.methodOfCalculation == "Average") {
+    student.finalGrade = student.averagePath();
+}
+else if (student.methodOfCalculation == "median" || student.methodOfCalculation == "Median") {
+    student.finalGrade = student.medianPath();
+}
+else {
+    cout << "Please choose either median or average: ";
+    inp >> student.methodOfCalculation;
+    if (student.methodOfCalculation == "median" || student.methodOfCalculation == "Median")
+        student.finalGrade = student.medianPath();
+    else
+        student.finalGrade = student.averagePath();
+}
+    }
+
   friend std::ostream& operator<<(std::ostream& out, const Person& student){
     out << left << setw(15) << student.firstName << setw(15) << student.lastName
     << fixed << setprecision(2) << setw(20) << student.finalGrade << endl;

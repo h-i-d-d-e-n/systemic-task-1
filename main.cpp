@@ -3,6 +3,7 @@
 
 int main()
 {
+
  int numberOfStudents;
     cout << "Enter number of students: ";
     cin >> numberOfStudents;
