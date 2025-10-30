@@ -1,0 +1,19 @@
+#include <string>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <iomanip>
+#include <random>
+
+using std::accumulate;
+using std::string;
+using std::vector;
+using std::cout;
+using std::cin;
+using std::endl;
+using std::sort;
+using std::left;
+using std::right;
+using std::setw;
+using std::setprecision;
+using std::fixed;
