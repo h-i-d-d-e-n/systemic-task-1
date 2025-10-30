@@ -3,8 +3,9 @@
 
 int main()
 {
+  srand(time(nullptr)); // seed random generator
 
- int numberOfStudents;
+  int numberOfStudents;
     cout << "Enter number of students: ";
     cin >> numberOfStudents;
     vector<Person> students(numberOfStudents);

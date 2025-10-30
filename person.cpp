@@ -28,6 +28,27 @@ class Person { // Person class definition
   };
 
 
+  vector<int> generateRandomHomeworkGrades(int minimumGrades = 1, int maximumGrades = 10) {
+
+    vector<int> randomGradesVector;
+
+    size_t numberOfGrades = rand() % 10 + 1;
+
+    for (size_t i = 0; i < numberOfGrades; ++i) {
+      int randomGrade = rand() % (maximumGrades - minimumGrades + 1) + minimumGrades;
+      randomGradesVector.push_back(randomGrade);
+    }
+
+    return randomGradesVector;
+  }
+
+  int generateRandomExamResult(int minimumGrade = 1, int maximumGrade = 10) {
+
+    int randomExamResult = rand() % (maximumGrade - minimumGrade + 1) + minimumGrade;
+    return randomExamResult;
+  }
+
+
   double gradeMedian() { // changed to double so functions would work and plus its more accurate
     if (homework.size() % 2 == 0) {
 
@@ -103,42 +124,75 @@ class Person { // Person class definition
 
 
   friend std::istream& operator>>(std::istream& inp, Person& student) {
+
     cout << "Enter first name: ";
     inp >> student.firstName;
+
     cout << "Enter last name: ";
     inp >> student.lastName;
-    cout << "Enter number of homework grades: ";
 
-    size_t n;
-    inp >> n;
-    student.homework.resize(n);
-    cout << "Enter homework grades: ";
-    for (size_t i = 0; i < n; ++i)
+
+    cout << "Please type either 'R' for random data or 'M' for manual data entry: ";
+    char userAnswer;
+    inp >> userAnswer;
+    if (userAnswer == 'R' || userAnswer == 'r')
+    {
+      student.homework = student.generateRandomHomeworkGrades();
+      student.examResults = student.generateRandomExamResult();
+    }
+    else if(userAnswer == 'M' || userAnswer == 'm')
+    {
+      cout << "Enter number of homework grades: ";
+
+      size_t n;
+      inp >> n;
+      student.homework.resize(n);
+      cout << "Enter homework grades: ";
+      for (size_t i = 0; i < n; ++i) {
         inp >> student.homework[i];
-    cout << "Enter exam grade: ";
-    inp >> student.examResults;
+      }
+      cout << "Enter exam grade: ";
+      inp >> student.examResults;
+    }
+
+
 
     cout << "Choose method of final grade calculation: ";
     inp >> student.methodOfCalculation;
     if (student.methodOfCalculation == "average" || student.methodOfCalculation == "Average") {
     student.finalGrade = student.averagePath();
-}
-else if (student.methodOfCalculation == "median" || student.methodOfCalculation == "Median") {
-    student.finalGrade = student.medianPath();
-}
-else {
-    cout << "Please choose either median or average: ";
-    inp >> student.methodOfCalculation;
-    if (student.methodOfCalculation == "median" || student.methodOfCalculation == "Median")
+    }
+      else if (student.methodOfCalculation == "median" || student.methodOfCalculation == "Median") {
         student.finalGrade = student.medianPath();
-    else
+      }
+      else {
+        cout << "Please choose either median or average: ";
+        inp >> student.methodOfCalculation;
+      }
+      if (student.methodOfCalculation == "median" || student.methodOfCalculation == "Median") {
+        student.finalGrade = student.medianPath();
+      }
+      else {
         student.finalGrade = student.averagePath();
-}
+      }
+
     }
 
   friend std::ostream& operator<<(std::ostream& out, const Person& student){
+
     out << left << setw(15) << student.firstName << setw(15) << student.lastName
     << fixed << setprecision(2) << setw(20) << student.finalGrade << endl;
+
+    // Show homework grades
+    out << endl << endl << "   Homework grades: ";
+    for (int grade : student.homework) {
+        out << grade << " ";
+    }
+
+    // Show exam result
+    out << "\n   Exam result: " << student.examResults << endl;
+    out << "------------------------------------------------------" << endl;
+
     return out;
   }
 };

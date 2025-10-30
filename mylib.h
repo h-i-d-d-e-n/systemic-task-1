@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <iomanip>
 #include <random>
+#include <cstdlib>
+#include <ctime>
 
 using std::accumulate;
 using std::string;
