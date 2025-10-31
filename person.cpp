@@ -142,20 +142,25 @@ class Person { // Person class definition
     }
     else if(userAnswer == 'M' || userAnswer == 'm')
     {
-      cout << "Enter number of homework grades: ";
+  
+      cout << "Enter homework grades ('Exit' to stop): ";
+      string userManualGrade;
 
-      size_t n;
-      inp >> n;
-      student.homework.resize(n);
-      cout << "Enter homework grades: ";
-      for (size_t i = 0; i < n; ++i) {
-        inp >> student.homework[i];
+      while (true) {
+        inp >> userManualGrade; 
+
+        if (userManualGrade == "Exit" || userManualGrade == "exit") {
+          break; 
+        }
+
+        int userGrade = stoi(userManualGrade); 
+        student.homework.push_back(userGrade); 
       }
+      
       cout << "Enter exam grade: ";
       inp >> student.examResults;
-    }
-
-
+        
+    }    
 
     cout << "Choose method of final grade calculation: ";
     inp >> student.methodOfCalculation;
@@ -175,7 +180,7 @@ class Person { // Person class definition
       else {
         student.finalGrade = student.averagePath();
       }
-
+      return inp;
     }
 
   friend std::ostream& operator<<(std::ostream& out, const Person& student){
