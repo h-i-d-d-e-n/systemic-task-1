@@ -6,6 +6,8 @@
 #include <random>
 #include <cstdlib>
 #include <ctime>
+#include <fstream>
+#include <sstream>
 
 using std::accumulate;
 using std::string;
@@ -19,3 +21,7 @@ using std::right;
 using std::setw;
 using std::setprecision;
 using std::fixed;
+using std::ifstream;
+using std::cerr;
+using std::ofstream;
+using std::stringstream;
