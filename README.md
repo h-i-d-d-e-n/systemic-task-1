@@ -30,4 +30,77 @@ A simple Timer class is included to measure the execution time of each main step
 The program also uses basic exception handling. If an input or output file cannot be opened, the program throws an error message instead of crashing silently.
 
 Overall, StudentSorter/StudentCalculato v1.0 provides a clear and structured solution to generating large student datasets, computing their grades, separating them into categories, and analyzing the performance of each processing method.
+
+
+
+
+APPLICATION USAGE GUIDE:
+
+1. Build the application CMake
+
+Open a terminal in the project folder.
+
+Create a build directory:
+
+mkdir build
+cd build
+
+
+Run CMake to generate the build files:
+
+cmake ..
+
+
+Build the executable:
+
+make
+
+
+After this step, the compiled program will be created inside the build directory.
+
+2. Run the application
+
+From inside the build directory, run:
+
+./student_sorter (or whatever its named, could be systemic task 1 or student calculator aswell)
+
+
+This will start the entire processing pipeline automatically.
+
+3. What the program does when running
+
+The program performs the following operations in order:
+
+Generates five test files containing
+1k, 10k, 100k, 1M, and 10M student records.
+
+Processes each file by calculating every student's final grade.
+
+Splits students into two categories:
+
+Passed (grade >= 5.0)
+
+Failed (grade < 5.0)
+
+Creates output files:
+
+<filename>_Good.txt
+
+<filename>_Bad.txt
+
+Runs list and deque processing.
+
+Prints timing results for:
+
+Reading
+
+Sorting
+
+Splitting and writing
+
+
+4. Output files generated
+
+
+And you should be done.
 _/
